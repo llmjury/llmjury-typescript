@@ -1,0 +1,13 @@
+# Node
+node_modules/
+dist/
+*.tgz
+
+# Tooling caches
+.eslintcache
+coverage/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

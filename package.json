@@ -1,0 +1,67 @@
+{
+  "name": "@llmjury/sdk",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Official TypeScript/JavaScript SDK for LLMJury — run LLM experiments in production: deterministic variant assignment, prompt/model comparison, and non-blocking metrics tracking.",
+  "license": "Apache-2.0",
+  "author": "LLMJury <support@llmjury.com> (https://llmjury.com)",
+  "homepage": "https://llmjury.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llmjury/llmjury-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/llmjury/llmjury-typescript/issues"
+  },
+  "keywords": [
+    "llm",
+    "experimentation",
+    "ab-testing",
+    "feature-flags",
+    "prompt-engineering",
+    "observability",
+    "evaluation",
+    "analytics"
+  ],
+  "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/fixup-cjs.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "example": "npm run build && node examples/quickstart.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/node": "^20.14.0",
+    "eslint": "^9.9.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.3.0",
+    "vitest": "^3.2.7"
+  }
+}

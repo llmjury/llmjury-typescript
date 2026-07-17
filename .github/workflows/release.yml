@@ -1,0 +1,56 @@
+name: Release to npm
+
+# Publishes when a GitHub release is published (tag format: v0.1.0).
+#
+# Uses npm Trusted Publishing (OIDC) with provenance — no long-lived token stored in
+# the repo. One-time setup on npmjs.com: package "llmjury-sdk" -> Settings ->
+# Trusted Publisher (owner: llmjury, repo: llmjury-typescript, workflow: release.yml).
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for npm Trusted Publishing + provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+      - name: Verify tag matches package version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package version $PKG_VERSION" >&2
+            exit 1
+          fi
+      - name: Install
+        run: npm ci
+      - name: Lint + test
+        run: |
+          npm run lint
+          npm test
+      - name: Build
+        run: npm run build
+      - name: Ensure latest npm (OIDC support)
+        run: npm install -g npm@latest
+      - name: Check whether this version is already on npm
+        id: check
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "llmjury-sdk@$VERSION" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "llmjury-sdk@$VERSION already on npm; skipping publish."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish
+        if: steps.check.outputs.published == 'false'
+        run: npm publish --provenance --access public

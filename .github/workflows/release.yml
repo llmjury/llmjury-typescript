@@ -3,7 +3,7 @@ name: Release to npm
 # Publishes when a GitHub release is published (tag format: v0.1.0).
 #
 # Uses npm Trusted Publishing (OIDC) with provenance — no long-lived token stored in
-# the repo. One-time setup on npmjs.com: package "@llmjury/sdk" -> Settings ->
+# the repo. One-time setup on npmjs.com: package "llmjury-sdk" -> Settings ->
 # Trusted Publisher (owner: llmjury, repo: llmjury-typescript, workflow: release.yml).
 
 on:

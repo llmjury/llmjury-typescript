@@ -1,8 +1,8 @@
 # LLMJury TypeScript SDK
 
 [![CI](https://github.com/llmjury/llmjury-typescript/actions/workflows/ci.yml/badge.svg)](https://github.com/llmjury/llmjury-typescript/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/%40llmjury%2Fsdk)](https://www.npmjs.com/package/@llmjury/sdk)
-[![Node](https://img.shields.io/node/v/%40llmjury%2Fsdk)](https://www.npmjs.com/package/@llmjury/sdk)
+[![npm](https://img.shields.io/npm/v/llmjury-sdk)](https://www.npmjs.com/package/llmjury-sdk)
+[![Node](https://img.shields.io/node/v/llmjury-sdk)](https://www.npmjs.com/package/llmjury-sdk)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 
 The official TypeScript/JavaScript SDK for [LLMJury](https://llmjury.com) — run LLM experiments
@@ -27,7 +27,7 @@ wins — and when you have enough data to trust it.
 ## Installation
 
 ```bash
-npm install @llmjury/sdk
+npm install llmjury-sdk
 ```
 
 Node 18+ or any modern browser. **Zero runtime dependencies** — the default transport is the
@@ -52,7 +52,7 @@ Create an experiment in the dashboard (say, `checkout-prompt`, with variants `co
 `friendly`, each carrying a prompt). Then:
 
 ```ts
-import { Client } from '@llmjury/sdk';
+import { Client } from 'llmjury-sdk';
 
 // Once, at startup. Prefetching means the first assign resolves instantly.
 const client = new Client({ experiments: ['checkout-prompt'] });
@@ -81,7 +81,7 @@ Add the setup-once `wrap()` interceptor and the SDK also captures **latency, tok
 name, errors, and time-to-first-token** from every LLM call — with zero per-call code:
 
 ```ts
-import { Client } from '@llmjury/sdk';
+import { Client } from 'llmjury-sdk';
 import Anthropic from '@anthropic-ai/sdk';
 
 // ---- once, at startup -------------------------------------------------------

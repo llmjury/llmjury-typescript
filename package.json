@@ -1,5 +1,5 @@
 {
-  "name": "@llmjury/sdk",
+  "name": "llmjury-sdk",
   "version": "0.1.0",
   "type": "module",
   "description": "Official TypeScript/JavaScript SDK for LLMJury — run LLM experiments in production: deterministic variant assignment, prompt/model comparison, and non-blocking metrics tracking.",

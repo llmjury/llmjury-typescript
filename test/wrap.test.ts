@@ -87,7 +87,7 @@ describe('wrap', () => {
   it('records errors and re-throws', async () => {
     const { client, transport } = await readyClient();
     const exploding = {
-      create: async () => {
+      create: async (_request: unknown) => {
         throw new Error('provider timeout');
       },
     };

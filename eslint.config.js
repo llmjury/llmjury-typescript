@@ -1,8 +1,7 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
-// ESLint 9 flat config (the legacy .eslintrc format is removed in v9). CONVENTIONS §5 mandates
-// ESLint + Prettier; this is the modern equivalent of the `.eslintrc` the prompt references.
+// ESLint 9 flat config (the legacy .eslintrc format is removed in v9).
 //
 // `no-undef` is intentionally left to the TypeScript compiler for `.ts` files (typescript-eslint
 // disables it in its recommended set). For the plain `.mjs` scripts/examples we declare the handful
@@ -24,5 +23,15 @@ export default tseslint.config(
   {
     files: ['scripts/**/*.mjs', 'examples/**/*.mjs', '*.js', '*.mjs'],
     languageOptions: { sourceType: 'module', globals: nodeWebGlobals },
+  },
+  {
+    // Underscore-prefixed parameters are deliberately unused (e.g. test doubles
+    // matching a real call signature).
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
+      ],
+    },
   },
 );
